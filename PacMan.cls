@@ -11,14 +11,14 @@ Attribute VB_Exposed = False
 Option Explicit
 Implements IGamePiece
 
-Public HostCell As GridCell
+Public HostCell As Tile
 
-Private Property Set IGamePiece_HostCell(ByVal RHS As GridCell)
+Private Property Set IGamePiece_HostCell(ByVal RHS As Tile)
         Set HostCell = RHS
         HostCell.TriggerEncounterInteractions
 End Property
 
-Private Property Get IGamePiece_HostCell() As GridCell
+Private Property Get IGamePiece_HostCell() As Tile
     Set IGamePiece_HostCell = HostCell
 End Property
 

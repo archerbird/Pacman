@@ -21,17 +21,17 @@ Private Sub Class_Terminate()
 End Sub
 
 
-Public Sub Add(item As IGamePiece)
-    internalCollection.Add item
+Public Sub Add(Item As IGamePiece)
+    internalCollection.Add Item
 End Sub
 
-Public Sub Remove(item As IGamePiece)
+Public Sub Remove(Item As IGamePiece)
     Dim idx As Integer
     
     If internalCollection.Count < 0 Then
         For idx = 0 To internalCollection.Count
         
-            If internalCollection(idx) Is item Then
+            If internalCollection(idx) Is Item Then
                 internalCollection.Remove idx
                 Exit Sub
             End If
@@ -46,7 +46,7 @@ Public Function Count() As Long
 End Function
 
 '@DefaultMember
-Public Property Get Element(index As Long)
-Attribute Element.VB_UserMemId = 0
-    Set Element = internalCollection(index)
+Public Property Get element(Index As Long)
+Attribute element.VB_UserMemId = 0
+    Set element = internalCollection(Index)
 End Property

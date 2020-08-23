@@ -10,9 +10,8 @@ Attribute VB_Exposed = False
 '@Folder("VBAProject")
 Option Explicit
 Implements IGamePiece
-Implements IDrawable
 
-Public WithEvents HostCell As GridCell
+Public WithEvents HostCell As Tile
 Attribute HostCell.VB_VarHelpID = -1
 
 Private Sub HostCell_DispatchEncounter()
@@ -20,15 +19,11 @@ Private Sub HostCell_DispatchEncounter()
     
 End Sub
 
-Private Sub IDrawable_Render()
-
-End Sub
-
-Private Property Set IGamePiece_HostCell(ByVal RHS As GridCell)
+Private Property Set IGamePiece_HostCell(ByVal RHS As Tile)
     Set HostCell = RHS
 End Property
 
-Private Property Get IGamePiece_HostCell() As GridCell
+Private Property Get IGamePiece_HostCell() As Tile
     Set IGamePiece_HostCell = HostCell
 End Property
 

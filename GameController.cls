@@ -11,56 +11,47 @@ Attribute VB_Exposed = False
 '@Exposed
 Option Explicit
 
-Private mBoard As GameGrid
-Private WithEvents mUiHost As Worksheet
-Attribute mUiHost.VB_VarHelpID = -1
-Private WithEvents mControls As KeyPressDispatcher
-Attribute mControls.VB_VarHelpID = -1
+Private mMaze() As Tile
 
+Public WithEvents UIAdapter As GameUIAdapter
+Attribute UIAdapter.VB_VarHelpID = -1
+Private UI As IGameUICommands
+
+Public Pacman As Pacman
+Public Ghosts As Ghost '//collection of ghosts
+
+
+Public Property Get Maze() As Tile()
+    Maze = mMaze
+End Property
+Public Property Let Maze(value() As Tile)
+    mMaze = value
+End Property
 
 Private Sub BuildGameBoard()
-
+    UI.DrawMap mMaze
 End Sub
 
-Private Sub PointPacMan(pathing As KeyCodes)
-    Debug.Print "PacMan moved " & pathing
-End Sub
-
-Private Sub Class_Initialize()
-    Set mUiHost = ThisWorkbook.Worksheets("PacmanUI")
-    BuildGameBoard
+Private Sub Progress()
+    '//Move all characters
+    
 End Sub
 
 Private Sub Class_Terminate()
-    
-    Set mUiHost = Nothing
+    Debug.Print TypeName(Me) & " terminating..."
+    UIAdapter.Deconstruct
+    Set UIAdapter = Nothing
+    Set UI = Nothing
 End Sub
 
-Public Sub StartGame(userInput As KeyPressDispatcher)
-    Set mControls = userInput
+Public Sub StartGame(userInput As GameUIAdapter)
+    Set UI = userInput
+    Set UIAdapter = userInput
 End Sub
 
-Private Sub mControls_KeyPressDown()
-    PointPacMan KeyCodes.DownArrow
-End Sub
 
-Private Sub mControls_KeyPressLeft()
-    PointPacMan KeyCodes.LeftArrow
-End Sub
-
-Private Sub mControls_KeyPressRight()
-    PointPacMan KeyCodes.RightArrow
-End Sub
-
-Private Sub mControls_KeyPressUp()
-    PointPacMan KeyCodes.UpArrow
-End Sub
-
-Private Sub mUiHost_Activate()
-    Set mControls = New KeyPressDispatcher
-End Sub
-
-Private Sub mUiHost_Deactivate()
-    Set mControls = Nothing
+'//User Input support
+Private Sub UIAdapter_DownKeyPress()
+MsgBox "Pressed Down"
 End Sub
 

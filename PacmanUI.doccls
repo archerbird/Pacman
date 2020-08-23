@@ -1,0 +1,12 @@
+﻿Option Explicit
+
+Public Event Activated()
+Public Event Deactivated()
+
+Private Sub Worksheet_Activate()
+    RaiseEvent Activated
+End Sub
+
+Private Sub Worksheet_Deactivate()
+    RaiseEvent Deactivated
+End Sub

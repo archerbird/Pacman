@@ -9,6 +9,6 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '@Folder("VBAProject")
 Option Explicit
-Public HostCell As GridCell
+Public HostCell As Tile
 
 
