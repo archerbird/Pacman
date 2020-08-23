@@ -1,5 +1,5 @@
 Attribute VB_Name = "DeveloperHelpers"
-'@Folder("VBAProject")
+'@Folder("PacManEngine")
 Option Explicit
 
 Sub ChangeWallTokens()

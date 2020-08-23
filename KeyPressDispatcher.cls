@@ -7,7 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("PacManEngine.UI")
+'@Folder("PacManEngine.UI.Implementations.ExcelWorksheet")
 '//Concrete implementation for events
 Option Explicit
 Implements IGameUIEvents

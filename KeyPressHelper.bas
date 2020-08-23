@@ -1,4 +1,5 @@
 Attribute VB_Name = "KeyPressHelper"
+'@Folder("PacManEngine.UI.Implementations.ExcelWorksheet")
 Option Explicit
 Public userInput As KeyPressDispatcher
 '// This module is only here to expose the class methods to the Application.OnKey Action pointer

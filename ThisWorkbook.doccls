@@ -1,1 +1,2 @@
-﻿Option Explicit
+﻿'@Folder("Excel")
+Option Explicit

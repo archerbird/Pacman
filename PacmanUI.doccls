@@ -1,12 +1,13 @@
-﻿Option Explicit
+﻿'@Folder("PacManEngine.UI.Implementations.ExcelWorksheet")
+Option Explicit
 
-Public Event Activated()
-Public Event Deactivated()
+Public Event Activate()
+Public Event Deactivate()
 
 Private Sub Worksheet_Activate()
-    RaiseEvent Activated
+    RaiseEvent Activate
 End Sub
 
 Private Sub Worksheet_Deactivate()
-    RaiseEvent Deactivated
+    RaiseEvent Deactivate
 End Sub

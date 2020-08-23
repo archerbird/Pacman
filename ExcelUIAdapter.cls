@@ -7,17 +7,19 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("PacManEngine.UI")
+'@Folder("PacManEngine.UI.Implementations.ExcelWorksheet")
 Option Explicit
 Implements IGameUICommands
 Implements IGameUIEvents
 
 '//two ways to access the same object
 Private WithEvents sheetUI As WorksheetUIWrapper
+Attribute sheetUI.VB_VarHelpID = -1
 Private sheetUICommand As IGameUICommands
 Private mAdapter As IGameUIEvents
 
 Private WithEvents keyListener As KeyPressDispatcher
+Attribute keyListener.VB_VarHelpID = -1
 
 Public Sub Init(sheetUI As WorksheetUIWrapper)
     Set sheetUI = sheetUI

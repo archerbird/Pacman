@@ -7,13 +7,12 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("PacManEngine")
+'@Folder("PacManEngine.GamePiece")
 Option Explicit
 
 Public WithEvents HostCell As Tile
 Attribute HostCell.VB_VarHelpID = -1
 Public Parent As Collection
-
 
 Private Sub HostCell_DispatchEncounter()
     '// remove the pellet
@@ -23,7 +22,6 @@ Private Sub HostCell_DispatchEncounter()
         
     End If
 End Sub
-
 
 Public Function ToString() As String
     ToString = Drawing.TextDot

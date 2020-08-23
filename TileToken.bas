@@ -1,5 +1,5 @@
 Attribute VB_Name = "TileToken"
-'@Folder("PacManEngine.GridCells")
+'@Folder("PacManEngine.Maps")
 Option Explicit
 
 Public Const WALL_TOKEN As String = "w"

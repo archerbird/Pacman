@@ -7,23 +7,13 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("VBAProject")
+'@Folder("PacManEngine.GamePiece")
 Option Explicit
 Implements IGamePiece
 
-Public WithEvents HostCell As Tile
-Attribute HostCell.VB_VarHelpID = -1
+Public WithEvents CurrentTile As Tile
+Attribute CurrentTile.VB_VarHelpID = -1
 
-Private Sub HostCell_DispatchEncounter()
+Private Sub CurrentTile_DispatchEncounter()
     '//You have encounted Pacman!
-    
 End Sub
-
-Private Property Set IGamePiece_HostCell(ByVal RHS As Tile)
-    Set HostCell = RHS
-End Property
-
-Private Property Get IGamePiece_HostCell() As Tile
-    Set IGamePiece_HostCell = HostCell
-End Property
-

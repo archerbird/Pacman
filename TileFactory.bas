@@ -1,5 +1,5 @@
 Attribute VB_Name = "TileFactory"
-'@Folder("PacManEngine.GridCells")
+'@Folder("PacManEngine.Maps")
 Option Explicit
 Private Const DEAULT_START_CELL As String = "C2"
 
