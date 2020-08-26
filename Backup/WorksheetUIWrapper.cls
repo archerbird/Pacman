@@ -33,9 +33,9 @@ Public Event DirectionalKeyPressed(vbKey As KeyCode)
 Public Sub Init(xlWs As Worksheet)
     
     xlWs.Activate
-    xlWs.Range("AE65").Select
+    xlWs.Range("A65").Select
     Set innerWs = xlWs
-    Set dPad = xlWs.Range("AE65")
+    Set dPad = xlWs.Range("A65")
 End Sub
 
 Private Sub Class_Terminate()
@@ -77,9 +77,9 @@ End Sub
 
 Private Sub innerWs_SelectionChange(ByVal Target As Range)
     If dPad.Offset(-1, 0).Address = Target.Address Then
-        RaiseEvent DirectionalKeyPressed(UpArrow)
-    ElseIf dPad.Offset(1, 0).Address = Target.Address Then
         RaiseEvent DirectionalKeyPressed(DownArrow)
+    ElseIf dPad.Offset(1, 0).Address = Target.Address Then
+        RaiseEvent DirectionalKeyPressed(UpArrow)
     ElseIf dPad.Offset(0, -1).Address = Target.Address Then
         RaiseEvent DirectionalKeyPressed(LeftArrow)
     ElseIf dPad.Offset(0, 1).Address = Target.Address Then
@@ -87,6 +87,6 @@ Private Sub innerWs_SelectionChange(ByVal Target As Range)
     End If
     
     Application.EnableEvents = False
-    dPad.Select
+    innerWs.Range("A65").Select
     Application.EnableEvents = True
 End Sub

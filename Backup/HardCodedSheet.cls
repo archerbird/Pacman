@@ -19,6 +19,7 @@ Private mAdapter As GameUIAdapter
 
 Public Event Activated()
 Public Event Deactivated()
+Public Event DirectionalKeyPressed(vbKey As KeyCode)
 
 
 Private Sub Class_Initialize()

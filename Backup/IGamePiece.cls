@@ -2,15 +2,14 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "PacMan"
+Attribute VB_Name = "IGamePiece"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '@Folder("PacManEngine.GamePiece")
 Option Explicit
-Implements IGamePiece
 
-Public CurrentTile As Tile
-
+Public Sub Move()
+End Sub
 

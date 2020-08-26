@@ -14,7 +14,7 @@ End Sub
 Public Sub TestWithHardCodedSheet()
     '//get our concrete sheet
     Dim xlWs As Worksheet
-    Set xlWs = Sheet1
+    Set xlWs = PacmanUI
     
     '//wrap it up
     Dim sheetWrapper As WorksheetUIWrapper

@@ -4,6 +4,7 @@ Option Explicit
 Public Event Activate()
 Public Event Deactivate()
 
+
 Private Sub Worksheet_Activate()
     RaiseEvent Activate
 End Sub

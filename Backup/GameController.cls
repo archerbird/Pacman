@@ -85,21 +85,10 @@ Public Sub StartGame(userInput As GameUIAdapter)
 End Sub
 
 
-Private Sub UIAdapter_DirectionalKeyPressed(vbKeyCode As KeyCode)
-    Select Case vbKeyCode
-        Case KeyCode.UpArrow
-            Pacman.Heading = dUp
-        Case KeyCode.DownArrow
-            Pacman.Heading = dDown
-        Case KeyCode.LeftArrow
-            Pacman.Heading = dLeft
-        Case KeyCode.RightArrow
-            Pacman.Heading = dRight
-    End Select
-    
-End Sub
-
 '//User Input support
+Private Sub UIAdapter_DownKeyPress()
+    Me.Pacman.Heading = dDown
+End Sub
 
 
 Private Sub UIAdapter_GameStarted()
@@ -111,3 +100,6 @@ Private Sub UIAdapter_GameStarted()
     
 End Sub
 
+Private Sub UIAdapter_UpKeyPressed()
+    Me.Pacman.Heading = dUp
+End Sub

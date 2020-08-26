@@ -122,7 +122,7 @@ Sub RecordGhostShape()
     Dim s As Shape
     Dim ghostShape As Shape
     
-    Set ghostShape = Sheet1.Shapes("Pacman")
+    Set ghostShape = PacmanUI.Shapes("Pacman")
     Set sg = ghostShape.GroupItems
     For Each s In sg
         s.Select
