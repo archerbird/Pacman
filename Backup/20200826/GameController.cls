@@ -49,7 +49,7 @@ Private Sub Progress()
     'Debug.Assert cycleCounter <> 2500
     If cycleCounter Mod Round(5 / pacman.Speed, 0) = 0 Then
         pacman.Move
-        'Debug.Print "Frame: " & cycleCounter & " PM pos: " & pacman.CurrentTile.y & ", " & pacman.CurrentTile.x & ": " & pacman.CurrentTile.Id
+        Debug.Print "Frame: " & cycleCounter & " PM pos: " & pacman.CurrentTile.y & ", " & pacman.CurrentTile.x & ": " & pacman.CurrentTile.Id
     End If
     
     'Debug.Assert Not Pacman.IsDead

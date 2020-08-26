@@ -51,20 +51,3 @@ Public Function GetNextTile(CurrentTile As Tile, Heading As Direction, Optional 
     End Select
 End Function
 
-Public Function ChooseShorterPathTile(targetedTile As Tile, ParamArray optionTiles() As Variant)
-    '// a^2 +b^2 = c^2
-    Dim item As Variant
-    Dim optionTile As Tile
-    Dim shortestDist As Double
-    Dim dist As Double
-    
-    For Each item In optionTiles
-        Set optionTile = item
-        dist = Sqr((targetedTile.y - optionTile.y) ^ 2 + (targetedTile.x - optionTile.x) ^ 2)
-        If dist < shortestDist Then
-            shortestDist = dist
-            Set ChooseShorterPathTile = optionTile
-        End If
-    Next
-End Function
-

@@ -11,6 +11,8 @@ Attribute VB_Exposed = False
 Option Explicit
 Implements IGamePiece
 
+Public Event ReadyToDraw()
+
 Private Type TPacmanController
     NextTile As Tile '// the next tile in pacman's current path
     CurrentTile As Tile '// the tile pacman is current in
@@ -101,4 +103,6 @@ Private Sub IGamePiece_Move()
     '//Aquire a the next desired tile and the next tile along the current path
     Set Me.TargetTile = MapManager.GetNextTile(this.CurrentTile, this.CommandedHeading)
     Set Me.NextTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
+    
+    RaiseEvent ReadyToDraw
 End Sub

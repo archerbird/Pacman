@@ -21,17 +21,17 @@ Private Sub Class_Terminate()
 End Sub
 
 
-Public Sub Add(item As IGamePiece)
-    internalCollection.Add item
+Public Sub Add(Item As IGamePiece)
+    internalCollection.Add Item
 End Sub
 
-Public Sub Remove(item As IGamePiece)
+Public Sub Remove(Item As IGamePiece)
     Dim idx As Integer
     
     If internalCollection.Count < 0 Then
         For idx = 0 To internalCollection.Count
         
-            If internalCollection(idx) Is item Then
+            If internalCollection(idx) Is Item Then
                 internalCollection.Remove idx
                 Exit Sub
             End If

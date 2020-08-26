@@ -2,25 +2,25 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "ExcelUIAdapter"
+Attribute VB_Name = "ExcelViewAdapter"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("PacManEngine.UI.Implementations.ExcelWorksheet")
+'@Folder "ViewImplementations.ExcelWorksheet"
 Option Explicit
-Implements IGameUICommands
-Implements IGameUIEvents
+Implements IViewCommands
+Implements IViewEvents
 
 '//two ways to access the same object
-Private WithEvents view As WorksheetUIWrapper
+Private WithEvents view As WorksheetViewWrapper
 Attribute view.VB_VarHelpID = -1
-Private viewCommand As IGameUICommands
-Private mAdapter As IGameUIEvents
+Private viewCommand As IViewCommands
+Private mAdapter As IViewEvents
 
 'Private WithEvents keyListener As KeyPressDispatcher
 
-Public Sub Init(sheetUI As WorksheetUIWrapper)
+Public Sub Init(sheetUI As WorksheetViewWrapper)
     Set view = sheetUI
     Set viewCommand = sheetUI
 End Sub
@@ -33,32 +33,32 @@ Private Sub Class_Terminate()
 End Sub
 
 '//Delegate commands down to the WorksheetUIWrapper
-Private Sub IGameUICommands_DrawGhost()
-    viewCommand.DrawGhost
+Private Sub IViewCommands_DrawGhost(character As Ghost)
+    viewCommand.DrawGhost character
 End Sub
 
-Private Sub IGameUICommands_DrawMap(map() As Tile)
+Private Sub IViewCommands_DrawMap(map() As Tile)
     viewCommand.DrawMap map
 End Sub
 
-Private Sub IGameUICommands_DrawPacman()
-    viewCommand.DrawPacman
+Private Sub IViewCommands_DrawPacman(character As PacmanController)
+    viewCommand.DrawPacman character
 End Sub
 
 
-Private Property Set IGameUICommands_Events(ByVal RHS As GameUIAdapter)
+Private Property Set IViewCommands_Events(ByVal RHS As ViewAdapter)
     Set mAdapter = RHS
 End Property
 
-Private Property Get IGameUICommands_Events() As GameUIAdapter
-    Set IGameUICommands_Events = mAdapter
+Private Property Get IViewCommands_Events() As ViewAdapter
+    Set IViewCommands_Events = mAdapter
 End Property
 
-Private Sub IGameUIEvents_OnDirectionalKeyPress(vbKey As KeyCode)
+Private Sub IViewEvents_OnDirectionalKeyPress(vbKey As KeyCode)
     mAdapter.OnDirectionalKeyPress vbKey
 End Sub
 
-Private Sub IGameUIEvents_OnGameStarted()
+Private Sub IViewEvents_OnGameStarted()
     mAdapter.OnGameStarted
 End Sub
 

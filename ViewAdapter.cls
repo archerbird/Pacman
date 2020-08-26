@@ -2,25 +2,25 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "GameUIAdapter"
+Attribute VB_Name = "ViewAdapter"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("PacManEngine.UI")
+'@Folder "PacManEngine.View"
 '//"Abstract" class
 Option Explicit
-Implements IGameUIEvents
-Implements IGameUICommands
+Implements IViewEvents
+Implements IViewCommands
 
 
-Private mCommandsUI As IGameUICommands
+Private mCommandsUI As IViewCommands
 
 Public Event DirectionalKeyPressed(vbKeyCode As KeyCode)
 Public Event GameStarted()
 
 
-Public Sub Init(viewUI As IGameUICommands)
+Public Sub Init(viewUI As IViewCommands)
     Set mCommandsUI = viewUI
     Set viewUI.Events = Me
 End Sub
@@ -35,30 +35,30 @@ Private Sub Class_Terminate()
 End Sub
 
 '//IGameUICommands Support
-Private Sub IGameUICommands_DrawGhost()
-    mCommandsUI.DrawGhost
+Private Sub IViewCommands_DrawGhost(character As Ghost)
+    mCommandsUI.DrawGhost character
 End Sub
 
-Private Sub IGameUICommands_DrawMap(map() As Tile)
+Private Sub IViewCommands_DrawMap(map() As Tile)
     mCommandsUI.DrawMap map
 End Sub
 
-Private Sub IGameUICommands_DrawPacman()
-    mCommandsUI.DrawPacman
+Private Sub IViewCommands_DrawPacman(character As PacmanController)
+    mCommandsUI.DrawPacman character
 End Sub
 
 
 
 
-Private Property Set IGameUICommands_Events(ByVal RHS As GameUIAdapter)
+Private Property Set IViewCommands_Events(ByVal RHS As ViewAdapter)
     '//never let this actually get set
 End Property
 
-Private Property Get IGameUICommands_Events() As GameUIAdapter
-    Set IGameUICommands_Events = Me
+Private Property Get IViewCommands_Events() As ViewAdapter
+    Set IViewCommands_Events = Me
 End Property
 
-Private Sub IGameUIEvents_OnDirectionalKeyPress(vbKey As KeyCode)
+Private Sub IViewEvents_OnDirectionalKeyPress(vbKey As KeyCode)
     RaiseEvent DirectionalKeyPressed(vbKey)
 End Sub
 
@@ -67,6 +67,6 @@ End Sub
 '    RaiseEvent DirectionalKeyPressed(vbKey)
 'End Sub
 
-Private Sub IGameUIEvents_OnGameStarted()
+Private Sub IViewEvents_OnGameStarted()
     RaiseEvent GameStarted
 End Sub
