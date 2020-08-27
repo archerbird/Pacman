@@ -14,5 +14,5 @@ Public CornerTile As Tile
 
 
 Private Function IGhostBehavior_AquireTargetTile() As Tile
-    Set IGhostBehavior_AquireTargetTile = MapManager.GetMazeTile(1, 1)
+    Set IGhostBehavior_AquireTargetTile = MapManager.GetMazeTile(28, 1)
 End Function

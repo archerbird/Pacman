@@ -78,13 +78,21 @@ Private Sub Class_Initialize()
 End Sub
 
 Private Sub IGamePiece_Move()
-
-    If NextTile.IsTraversable Then
-        Set CurrentTile = NextTile
-    Else
+    
+    If CurrentTile.IsDecisionNode Or Not NextTile.IsTraversable Then
         '//Get pathing options
         '//Calculate shortest path to target tile
         ChooseNextTileAndDirection
+
+    Else
+        Set CurrentTile = NextTile
+        
+    End If
+    
+    If CurrentTile.Id = TileToken.SLOW_PATH_TOKEN Then
+        this.Speed = 0.5
+    Else
+        this.Speed = 0.7
     End If
     
     '//Aquire a the next desired tile and the next tile along the current path
@@ -102,17 +110,7 @@ Private Sub ChooseNextTileAndDirection()
     minDist = 2147483647 '//max long
     
     
-    If Heading <> dUp Then
-        Set testTile = MapManager.GetNextTile(CurrentTile, dDown)
-        If testTile.IsTraversable Then
-            DistToTarget = MapManager.TileDistance(this.TargetTile, testTile)
-            If DistToTarget < minDist Then
-                minDist = DistToTarget
-                Set selectedTile = testTile
-                selectedDirection = dDown
-            End If
-        End If
-    End If
+    
     
     If Heading <> dDown Then
         Set testTile = MapManager.GetNextTile(CurrentTile, dUp)
@@ -134,6 +132,18 @@ Private Sub ChooseNextTileAndDirection()
                 minDist = DistToTarget
                 Set selectedTile = testTile
                 selectedDirection = dLeft
+            End If
+        End If
+    End If
+    
+    If Heading <> dUp Then
+        Set testTile = MapManager.GetNextTile(CurrentTile, dDown)
+        If testTile.IsTraversable Then
+            DistToTarget = MapManager.TileDistance(this.TargetTile, testTile)
+            If DistToTarget < minDist Then
+                minDist = DistToTarget
+                Set selectedTile = testTile
+                selectedDirection = dDown
             End If
         End If
     End If

@@ -39,7 +39,11 @@ Function RecordMapEncoding() As String
                     outputArr(i) = "p" '//pellet
                 End If
             ElseIf cell.value = "`" Then
-                 outputArr(i) = "d"
+                 outputArr(i) = "D"
+            ElseIf cell.value = "~" Then
+                outputArr(i) = "s"
+            ElseIf cell.value = "d" Then
+                outputArr(i) = "d"
             Else
                 outputArr(i) = "m" '//regular maze pathing
             End If
@@ -146,4 +150,9 @@ Sub RecordGhostShape()
     
 End Sub
 
+Sub test()
+Dim g As New GhostStyler
 
+g.CreateShape ActiveSheet, vbCyan
+
+End Sub

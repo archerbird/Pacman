@@ -21,10 +21,14 @@ Public Function NewTile(tileEncoding As String, xPos As Integer, yPos As Integer
                 .Id = SUPER_PELLET_TOEKN
             Case TileToken.OPEN_PATH
                 .Id = OPEN_PATH
-            Case TileToken.DOOR
-                .Id = DOOR
+            Case TileToken.DECISION_NODE_TOKEN
+                .Id = DECISION_NODE_TOKEN
+            Case TileToken.SLOW_PATH_TOKEN
+                .Id = SLOW_PATH_TOKEN
+            Case TileToken.DOOR_TOKEN
+                .Id = DOOR_TOKEN
         End Select
-        .IsTraversable = tileEncoding <> TileToken.WALL_TOKEN And tileEncoding <> TileToken.DOOR
+        .IsTraversable = tileEncoding <> TileToken.WALL_TOKEN And tileEncoding <> TileToken.DOOR_TOKEN
         .SetAddress xPos, yPos
     End With
     Set NewTile = result

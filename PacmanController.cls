@@ -18,10 +18,17 @@ Private Type TPacmanController
     Heading As Direction '// the direction pacman is currently facing
     CommandedHeading As Direction '//the direction pacman will try to go
     Speed As Double
+    CycleRemainder As Integer
     IsDead As Boolean
 End Type
 
 Private this As TPacmanController
+Public Property Get CycleRemainder() As Integer
+    CycleRemainder = this.CycleRemainder
+End Property
+Public Property Let CycleRemainder(value As Integer)
+    this.CycleRemainder = value
+End Property
 
 Public Property Get NextTile() As Tile
     Set NextTile = this.NextTile
