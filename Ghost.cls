@@ -11,13 +11,70 @@ Attribute VB_Exposed = False
 Option Explicit
 Implements IGamePiece
 
-Private mActiveBehavior As IGhostBehavior
-Public TargetTile As Tile
-Public CurrentTile As Tile
-Public NextTile As Tile
-Public Heading As Direction
-Public CommandedHeading As Direction
-Public Speed As Double
+Private Type TGhost
+    ActiveBehavior As IGhostBehavior
+    TargetTile As Tile
+    CurrentTile As Tile
+    NextTile As Tile
+    Heading As Direction
+    Speed As Double
+End Type
+
+Private this As TGhost
+
+Public Property Set ActiveBehavior(ByVal RHS As IGhostBehavior)
+    Set this.ActiveBehavior = RHS
+    Set TargetTile = this.ActiveBehavior.AquireTargetTile()
+End Property
+
+Public Property Get TargetTile() As Tile
+    Set TargetTile = this.TargetTile
+End Property
+
+Public Property Set TargetTile(ByVal RHS As Tile)
+    Set this.TargetTile = RHS
+End Property
+
+Public Property Get CurrentTile() As Tile
+    Set CurrentTile = this.CurrentTile
+End Property
+
+Public Property Set CurrentTile(ByVal RHS As Tile)
+    Set this.CurrentTile = RHS
+End Property
+
+Public Property Get NextTile() As Tile
+    Set NextTile = this.NextTile
+End Property
+
+Public Property Set NextTile(ByVal RHS As Tile)
+    Set this.NextTile = RHS
+End Property
+
+Public Property Get Heading() As Direction
+    Heading = this.Heading
+End Property
+
+Public Property Let Heading(ByVal RHS As Direction)
+    this.Heading = RHS
+End Property
+
+Public Property Get Speed() As Double
+    Speed = this.Speed
+End Property
+
+Public Property Let Speed(ByVal RHS As Double)
+    this.Speed = RHS
+End Property
+
+Public Sub Move()
+    Call IGamePiece_Move
+End Sub
+
+Private Sub Class_Initialize()
+    this.Heading = dLeft
+    this.Speed = 0.7
+End Sub
 
 Private Sub IGamePiece_Move()
 
@@ -30,10 +87,49 @@ Private Sub IGamePiece_Move()
     End If
     
     '//Aquire a the next desired tile and the next tile along the current path
-    Set TargetTile = mActiveBehavior.AquireTargetTile(Nothing)
-    Set Me.NextTile = MapManager.GetNextTile(CurrentTile, Heading)
+    Set this.TargetTile = this.ActiveBehavior.AquireTargetTile()
+    Set this.NextTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
 End Sub
 
 Private Function GetNextTileOptions() As Variant
+    Dim TilesArr As Variant
+    Dim nextIndex As Long
+    Dim testTile As Tile
+    
+    If Heading <> dDown Then
+        nextIndex = UBound(TilesArr) + 1
+        Set testTile = MapManager.GetNextTile(CurrentTile, dDown)
+        If testTile.IsTraversable Then
+            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
+            Set TilesArr(nextIndex) = testTile
+        End If
+    End If
+    
+    If Heading <> dUp Then
+        nextIndex = UBound(TilesArr) + 1
+        Set testTile = MapManager.GetNextTile(CurrentTile, dUp)
+        If testTile.IsTraversable Then
+            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
+            Set TilesArr(nextIndex) = testTile
+        End If
+    End If
+    
+    If Heading <> dLeft Then
+        nextIndex = UBound(TilesArr) + 1
+        Set testTile = MapManager.GetNextTile(CurrentTile, dLeft)
+        If testTile.IsTraversable Then
+            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
+            Set TilesArr(nextIndex) = testTile
+        End If
+    End If
+    
+    If Heading <> dRight Then
+       nextIndex = UBound(TilesArr) + 1
+        Set testTile = MapManager.GetNextTile(CurrentTile, dRight)
+        If testTile.IsTraversable Then
+            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
+            Set TilesArr(nextIndex) = testTile
+        End If
+    End If
     
 End Function

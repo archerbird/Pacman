@@ -77,7 +77,8 @@ Public Property Let IsDead(ByVal RHS As Boolean)
 End Property
 
 Private Sub Class_Initialize()
-    Speed = 0.8
+    this.Speed = 0.8
+    this.Heading = dLeft
 End Sub
 
 Public Sub Move()

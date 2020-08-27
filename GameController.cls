@@ -20,7 +20,7 @@ Attribute UIAdapter.VB_VarHelpID = -1
 Private UI As IViewCommands
 
 Public pacman As PacmanController
-Private blinky As Ghost
+Public blinky As Ghost
 Public Ghosts As Ghost '//collection of ghosts
 
 Public Enum Direction
@@ -69,9 +69,15 @@ Public Sub StartGame(userInput As ViewAdapter)
     Set UI = userInput
     Set UIAdapter = userInput
     
+    '// set up pacman
     Set Me.pacman = New PacmanController
     Set Me.pacman.CurrentTile = MapManager.GetMazeTile(46, 30)
-    Me.pacman.Heading = dLeft
+    
+    '// set up ghosts
+    Set Me.blinky = New Ghost
+    Set Me.blinky.CurrentTile = MapManager.GetMazeTile(22, 30)
+    Set Me.blinky.ActiveBehavior = New ScatterBehavior
+    
     
     UI.DrawMap mMaze
     

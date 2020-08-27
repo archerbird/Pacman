@@ -10,5 +10,5 @@ Attribute VB_Exposed = False
 '@Folder "PacManEngine.Model.Ghost.PathingAI"
 Option Explicit
 
-Public Function AquireTargetTile(value As Tile)
+Public Function AquireTargetTile() As Tile
 End Function
