@@ -52,6 +52,10 @@ Private Sub Progress()
         'Debug.Print "Frame: " & cycleCounter & " PM pos: " & pacman.CurrentTile.y & ", " & pacman.CurrentTile.x & ": " & pacman.CurrentTile.Id
     End If
     
+    If cycleCounter Mod Round(5 / blinky.Speed, 0) = 0 Then
+        blinky.Move
+    End If
+    
     'Debug.Assert Not Pacman.IsDead
     'If Pacman.IsDead Then IsGameOver = True
     UI.DrawGhost blinky

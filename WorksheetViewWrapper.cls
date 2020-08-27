@@ -48,6 +48,7 @@ Public Sub Init(xlWs As Worksheet)
     Set innerWs = xlWs
     Set dPad = xlWs.Range("AE65")
     pacman.CreateShape innerWs
+    blinky.CreateShape innerWs, vbRed
 End Sub
 
 Private Sub Class_Initialize()
@@ -71,7 +72,7 @@ End Function
 
 '// Support for IGameUICommands
 Private Sub IViewCommands_DrawGhost(character As Ghost)
-    'blinky.Redraw character.Heading, TileToRange(character.CurrentTile)
+    blinky.Redraw character.Heading, TileToRange(character.CurrentTile)
 End Sub
 
 Private Sub IViewCommands_DrawMap(map() As Tile)

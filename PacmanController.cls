@@ -46,6 +46,7 @@ End Property
 Public Property Set CurrentTile(ByVal RHS As Tile)
     Set this.CurrentTile = RHS
     Set this.NextTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
+    Set this.TargetTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
 End Property
 
 Public Property Get Heading() As Direction
@@ -79,6 +80,7 @@ End Property
 Private Sub Class_Initialize()
     this.Speed = 0.8
     this.Heading = dLeft
+    this.CommandedHeading = dLeft
 End Sub
 
 Public Sub Move()

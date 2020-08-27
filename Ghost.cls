@@ -41,6 +41,7 @@ End Property
 
 Public Property Set CurrentTile(ByVal RHS As Tile)
     Set this.CurrentTile = RHS
+    Set this.NextTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
 End Property
 
 Public Property Get NextTile() As Tile
@@ -83,7 +84,7 @@ Private Sub IGamePiece_Move()
     Else
         '//Get pathing options
         '//Calculate shortest path to target tile
-        Set CurrentTile = MapManager.ChooseShorterPathTile(TargetTile, GetNextTileOptions())
+        ChooseNextTileAndDirection
     End If
     
     '//Aquire a the next desired tile and the next tile along the current path
@@ -91,45 +92,83 @@ Private Sub IGamePiece_Move()
     Set this.NextTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
 End Sub
 
-Private Function GetNextTileOptions() As Variant
-    Dim TilesArr As Variant
-    Dim nextIndex As Long
+Private Sub ChooseNextTileAndDirection()
+    Dim DistToTarget As Long
     Dim testTile As Tile
+    Dim selectedTile As Tile
+    Dim minDist As Long
+    Dim selectedDirection As Direction
     
-    If Heading <> dDown Then
-        nextIndex = UBound(TilesArr) + 1
-        Set testTile = MapManager.GetNextTile(CurrentTile, dDown)
-        If testTile.IsTraversable Then
-            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
-            Set TilesArr(nextIndex) = testTile
-        End If
-    End If
+    minDist = 2147483647 '//max long
+    
     
     If Heading <> dUp Then
-        nextIndex = UBound(TilesArr) + 1
-        Set testTile = MapManager.GetNextTile(CurrentTile, dUp)
+        Set testTile = MapManager.GetNextTile(CurrentTile, dDown)
         If testTile.IsTraversable Then
-            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
-            Set TilesArr(nextIndex) = testTile
+            DistToTarget = MapManager.TileDistance(this.TargetTile, testTile)
+            If DistToTarget < minDist Then
+                minDist = DistToTarget
+                Set selectedTile = testTile
+                selectedDirection = dDown
+            End If
         End If
     End If
     
-    If Heading <> dLeft Then
-        nextIndex = UBound(TilesArr) + 1
-        Set testTile = MapManager.GetNextTile(CurrentTile, dLeft)
+    If Heading <> dDown Then
+        Set testTile = MapManager.GetNextTile(CurrentTile, dUp)
         If testTile.IsTraversable Then
-            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
-            Set TilesArr(nextIndex) = testTile
+            DistToTarget = MapManager.TileDistance(this.TargetTile, testTile)
+            If DistToTarget < minDist Then
+                minDist = DistToTarget
+                Set selectedTile = testTile
+                selectedDirection = dUp
+            End If
         End If
     End If
     
     If Heading <> dRight Then
-       nextIndex = UBound(TilesArr) + 1
-        Set testTile = MapManager.GetNextTile(CurrentTile, dRight)
+        Set testTile = MapManager.GetNextTile(CurrentTile, dLeft)
         If testTile.IsTraversable Then
-            ReDim Preserve TilesArr(LBound(TilesArr) To nextIndex)
-            Set TilesArr(nextIndex) = testTile
+            DistToTarget = MapManager.TileDistance(this.TargetTile, testTile)
+            If DistToTarget < minDist Then
+                minDist = DistToTarget
+                Set selectedTile = testTile
+                selectedDirection = dLeft
+            End If
         End If
     End If
+    
+    If Heading <> dLeft Then
+        Set testTile = MapManager.GetNextTile(CurrentTile, dRight)
+        If testTile.IsTraversable Then
+            DistToTarget = MapManager.TileDistance(this.TargetTile, testTile)
+            If DistToTarget < minDist Then
+                minDist = DistToTarget
+                Set selectedTile = testTile
+                selectedDirection = dRight
+            End If
+        End If
+    End If
+    
+    Set this.CurrentTile = selectedTile
+    this.Heading = selectedDirection
+  
+End Sub
+
+Private Function GetIndexOfMin(numbers() As Long) As Long
+    '//return the index of the smallest number in an array of numbers
+    Dim i As Long
+    Dim minVal As Long
+    Dim indexOfMin As Long
+    
+    minVal = 2147483647
+    
+    For i = LBound(numbers) To UBound(numbers)
+        If numbers(i) < minVal Then
+            indexOfMin = i
+            minVal = numbers(i)
+        End If
+    Next
+    
     
 End Function
