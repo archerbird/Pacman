@@ -15,14 +15,6 @@ Public Sub CenterShapeOnRange(tarShape As Shape, tarRng As Range)
     tarShape.Top = tarRng.Top - (tarShape.Height / 2) + (tarRng.Height / 2)
 End Sub
 
-Public Sub DrawGhost(ghostColor As Long, hostRange As Range)
-    Dim ghostPen As New GhostStyler
-    Dim myGhost As Shape
-    
-    Set myGhost = ghostPen.CreateShape(hostRange, ghostColor)
-    CenterShapeOnRange myGhost, hostRange
-End Sub
-
 Public Function ColorAsRGB(colorCode As Long) As Variant
     ColorAsRGB = Split((colorCode Mod 256) & ", " & ((colorCode \ 256) Mod 256) & ", " & (colorCode \ 65536), ",")
 End Function

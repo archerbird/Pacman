@@ -8,8 +8,25 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '@Folder "PacManEngine.Model"
+'@Interface
 Option Explicit
+
+Public Property Get Id() As String
+End Property
+
+Public Property Get CycleRemainder() As Integer
+End Property
+Public Property Let CycleRemainder(value As Integer)
+End Property
+
+Public Property Get Speed() As Double
+End Property
+
+Public Property Get CurrentHeading() As Direction
+End Property
+
+Public Property Get CurrentTile() As Tile
+End Property
 
 Public Sub Move()
 End Sub
-

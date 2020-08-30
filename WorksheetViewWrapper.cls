@@ -16,10 +16,9 @@ Private Const MAP_START_ADDRESS As String = "$D$3"
 Private MapRange As Range
 Private WithEvents innerWs As Worksheet
 Attribute innerWs.VB_VarHelpID = -1
-Private mAdapter As ViewAdapter
+Private mAdapter As IViewEvents
 Private dPad As Range
-Private pacman As PacmanStyler
-Private blinky As GhostStyler
+Private ShapeWrappers As Dictionary
 
 Private YIndexOffset As Long
 Private XIndexOffset As Long
@@ -47,13 +46,6 @@ Public Sub Init(xlWs As Worksheet)
     xlWs.Range("AE65").Select
     Set innerWs = xlWs
     Set dPad = xlWs.Range("AE65")
-    pacman.CreateShape innerWs
-    blinky.CreateShape innerWs, vbRed
-End Sub
-
-Private Sub Class_Initialize()
-    Set pacman = New PacmanStyler
-    Set blinky = New GhostStyler
 End Sub
 
 Private Sub Class_Terminate()
@@ -70,12 +62,30 @@ Private Function TileToRange(mapTile As Tile) As Range
 End Function
 
 
+
+
 '// Support for IGameUICommands
-Private Sub IViewCommands_DrawGhost(character As Ghost)
-    blinky.Redraw character.Heading, TileToRange(character.CurrentTile)
+Private Sub IViewCommands_CreateGhost(character As Ghost)
+    '// Create a corrosponding ViewModel Ghost
+    Dim newGhostShape As New GhostStyler
+    newGhostShape.Init innerWs, character.Color
+
+    '// Add him to the drawing collection
+    ShapeWrappers.Add character.Name, newGhostShape
+    
 End Sub
 
-Private Sub IViewCommands_DrawMap(map() As Tile)
+Private Sub IViewCommands_CreatePacman(character As PacmanController)
+    '// Create a corrosponding ViewModel Pacman
+    Dim newPacmanShape As New PacmanStyler
+    newPacmanShape.Init innerWs
+    
+    '// Add him to the drawing collection
+    ShapeWrappers.Add character.Name, newPacmanShape
+    
+End Sub
+
+Private Sub IViewCommands_CreateMap(map() As Tile)
 
     YIndexOffset = 1 - LBound(map, 1)
     XIndexOffset = 1 - LBound(map, 2)
@@ -83,18 +93,24 @@ Private Sub IViewCommands_DrawMap(map() As Tile)
     Set MapRange = innerWs.Range(MAP_START_ADDRESS).Resize(UBound(map, 1) + YIndexOffset, UBound(map, 2) + XIndexOffset)
 End Sub
 
-Private Sub IViewCommands_DrawPacman(character As PacmanController)
-    pacman.Redraw character.Heading, TileToRange(character.CurrentTile)
+Private Sub IViewCommands_UpdateComponent(characters As GamePieceCollection)
+    Dim character As IGamePiece
+    Dim characterShape As IDrawable
+    
+    For Each character In characters
+        '// use the id from each character to get the corresponding ShapeWrapper
+        Set characterShape = ShapeWrappers.Item(character.Id)
+        characterShape.Redraw character.CurrentHeading, TileToRange(character.CurrentTile)
+        
+    Next
 End Sub
 
 
-
-
-Private Property Set IViewCommands_Events(ByVal RHS As ViewAdapter)
+Private Property Set IViewCommands_Events(ByVal RHS As IViewEvents)
     Set mAdapter = RHS
 End Property
 
-Private Property Get IViewCommands_Events() As ViewAdapter
+Private Property Get IViewCommands_Events() As IViewEvents
     Set IViewCommands_Events = mAdapter
 End Property
 
@@ -109,16 +125,18 @@ End Sub
 
 Private Sub innerWs_SelectionChange(ByVal Target As Range)
     If dPad.Offset(-1, 0).Address = Target.Address Then
-        RaiseEvent DirectionalKeyPressed(UpArrow)
+        mAdapter.OnDirectionalKeyPress UpArrow
     ElseIf dPad.Offset(1, 0).Address = Target.Address Then
-        RaiseEvent DirectionalKeyPressed(DownArrow)
+        mAdapter.OnDirectionalKeyPress (DownArrow)
     ElseIf dPad.Offset(0, -1).Address = Target.Address Then
-        RaiseEvent DirectionalKeyPressed(LeftArrow)
+        mAdapter.OnDirectionalKeyPress (LeftArrow)
     ElseIf dPad.Offset(0, 1).Address = Target.Address Then
-        RaiseEvent DirectionalKeyPressed(RightArrow)
+        mAdapter.OnDirectionalKeyPress (RightArrow)
     End If
     
     Application.EnableEvents = False
     dPad.Select
     Application.EnableEvents = True
 End Sub
+
+

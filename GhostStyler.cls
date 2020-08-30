@@ -5,10 +5,13 @@ END
 Attribute VB_Name = "GhostStyler"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = False
+Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'@PredeclaredId
 '@Folder "ViewImplementations.ExcelWorksheet"
+
 Option Explicit
+Implements IDrawable
 
 Private mSelf As Shape
 Private Const clBLUE As Long = &HC47244
@@ -22,7 +25,7 @@ Public Sub Redraw(facing As Direction, location As Range)
 
      Drawing.CenterShapeOnRange Me.Self, location
 End Sub
-Public Function CreateShape(hostSheet As Worksheet, ghostColor As Long) As Shape
+Public Sub Init(hostSheet As Worksheet, ghostColor As Long)
     Dim newShapesNames(0 To 7) As String
     Dim newShapeNamesEyes(0 To 4) As String
     Dim result As Shape
@@ -37,32 +40,33 @@ Public Function CreateShape(hostSheet As Worksheet, ghostColor As Long) As Shape
         newShapesNames(1) = shapePointer.Name
         
         '//Bottom wisps
-        Set shapePointer = .AddShape(msoShapeRightTriangle, 17.063, 15.75, 3.6, 3.6) '//LeftMost
-        shapePointer.Flip msoFlipVertical
-        newShapesNames(2) = shapePointer.Name
-        
-        Set shapePointer = .AddShape(msoShapeRightTriangle, 13.5, 15.75, 3.6, 3.6) '//CenterLeft
-        shapePointer.Flip msoFlipVertical
-        shapePointer.Flip msoFlipHorizontal
-        newShapesNames(3) = shapePointer.Name
-        
-        Set shapePointer = .AddShape(msoShapeRightTriangle, 3.56, 15.75, 3.6, 3.6) '//CenterRight
-        shapePointer.Flip msoFlipVertical
-        newShapesNames(4) = shapePointer.Name
-        
-        Set shapePointer = .AddShape(msoShapeRightTriangle, 0, 15.75, 3.6, 3.6) 'RightMost
+        Set shapePointer = .AddShape(msoShapeRightTriangle, 0, 15.75, 3.6, 3.6) 'LeftSide of Left Wisp
         shapePointer.Flip msoFlipVertical
         shapePointer.Flip msoFlipHorizontal
         newShapesNames(5) = shapePointer.Name
         
-        Set shapePointer = .AddShape(msoShapeRightTriangle, 10.3, 15.75, 3.6, 3.6) 'RightMost
+        Set shapePointer = .AddShape(msoShapeRightTriangle, 3.56, 15.75, 3.6, 3.6) '//RightSide of Left Wisp
         shapePointer.Flip msoFlipVertical
-        newShapesNames(6) = shapePointer.Name
+        newShapesNames(4) = shapePointer.Name
         
-        Set shapePointer = .AddShape(msoShapeRightTriangle, 6.75, 15.75, 3.6, 3.6) 'RightMost
+        Set shapePointer = .AddShape(msoShapeRightTriangle, 6.75, 15.75, 3.6, 3.6) 'LeftSide of Center Wisp
         shapePointer.Flip msoFlipVertical
         shapePointer.Flip msoFlipHorizontal
         newShapesNames(7) = shapePointer.Name
+        
+        Set shapePointer = .AddShape(msoShapeRightTriangle, 10.3, 15.75, 3.6, 3.6) 'RightSide of Center Wisp
+        shapePointer.Flip msoFlipVertical
+        newShapesNames(6) = shapePointer.Name
+        
+        Set shapePointer = .AddShape(msoShapeRightTriangle, 13.5, 15.75, 3.6, 3.6) '//LeftSide of Right Wisp
+        shapePointer.Flip msoFlipVertical
+        shapePointer.Flip msoFlipHorizontal
+        newShapesNames(3) = shapePointer.Name
+        
+        Set shapePointer = .AddShape(msoShapeRightTriangle, 17.063, 15.75, 3.6, 3.6) '//RightSide of Right Wisp
+        shapePointer.Flip msoFlipVertical
+        newShapesNames(2) = shapePointer.Name
+        
         
         Set ghostBody = hostSheet.Shapes.Range(newShapesNames).Group
         ghostBody.Fill.ForeColor.RGB = ghostColor
@@ -93,7 +97,10 @@ Public Function CreateShape(hostSheet As Worksheet, ghostColor As Long) As Shape
     
     result.Line.Visible = msoFalse
     Set mSelf = result
-    Set CreateShape = result
     
-End Function
+End Sub
 
+Private Sub IDrawable_Redraw(facing As Direction, location As Range)
+
+    Drawing.CenterShapeOnRange mSelf, location
+End Sub

@@ -105,21 +105,20 @@ Public Function ReadText(fileName As String) As String
     Close #1
 End Function
 
-Sub ToTheClipboard(Text As String)
-Dim MyDataObj As New DataObject
-MyDataObj.SetText Text
-'MyDataObj.SetText 123.456
-MyDataObj.PutInClipboard
-End Sub
-
-Sub PastingFromTheClipboard()
-Dim MyDataObj As New DataObject
-MyDataObj.GetFromClipboard
-
-Dim MyVar As Variant
-MyVar = MyDataObj.GetText
-MsgBox MyVar
-End Sub
+'Sub ToTheClipboard(Text As String)
+'Dim MyDataObj As New DataObject
+'MyDataObj.SetText Text
+'MyDataObj.PutInClipboard
+'End Sub
+'
+'Sub PastingFromTheClipboard()
+'Dim MyDataObj As New DataObject
+'MyDataObj.GetFromClipboard
+'
+'Dim MyVar As Variant
+'MyVar = MyDataObj.GetText
+'MsgBox MyVar
+'End Sub
 
 Sub RecordGhostShape()
     Dim sg As GroupShapes
@@ -153,6 +152,6 @@ End Sub
 Sub test()
 Dim g As New GhostStyler
 
-g.CreateShape ActiveSheet, vbCyan
+g.Init ActiveSheet, vbCyan
 
 End Sub

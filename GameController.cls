@@ -19,11 +19,9 @@ Private Const n As Double = 10
 
 Public WithEvents UIAdapter As ViewAdapter
 Attribute UIAdapter.VB_VarHelpID = -1
-Private UI As IViewCommands
 
-Public pacman As PacmanController
+Public Pacman As PacmanController
 Public blinky As Ghost
-Private mGhosts As Collection '//collection of ghosts
 
 Public Enum Direction
     dNone = 0
@@ -37,6 +35,8 @@ Private Type TGameController
     Maze() As Tile
     CycleCounter As Long
     Ghosts As Collection
+    Moveables As GamePieceCollection
+    Pacman As PacmanController
 End Type
 
 Private this As TGameController
@@ -54,76 +54,86 @@ Public Property Let Maze(value() As Tile)
 End Property
 
 Private Sub BuildGameBoard()
-    UI.DrawMap Me.Maze
+    UIAdapter.AsCommandSender.CreateMap Me.Maze
 End Sub
 
 Private Sub Progress()
     Sleep 0.05
     
-    If pacman.CycleRemainder >= n Then
-        pacman.CycleRemainder = pacman.CycleRemainder Mod n
-        pacman.Move
-        tempMoveCount = tempMoveCount + 1
-                
+    Dim character As IGamePiece
     
-    Else
-    'Debug.Assert cycleCounter <> 2500
-        If this.CycleCounter Mod Round(n / (n * (1 - pacman.Speed)), 0) <> 0 Then
+    For Each character In this.Moveables
+    
+        If character.CycleRemainder >= n Then
+            character.CycleRemainder = character.CycleRemainder Mod n
+            character.Move
+            tempMoveCount = tempMoveCount + 1
+                    
         
-           pacman.CycleRemainder = pacman.CycleRemainder + n Mod (n * (1 - pacman.Speed))
-           pacman.Move
-           
-           tempMoveCount = tempMoveCount + 1
+        Else
+        'Debug.Assert cycleCounter <> 2500
+            If this.CycleCounter Mod Round(n / (n * (1 - character.Speed)), 0) <> 0 Then
+            
+               character.CycleRemainder = character.CycleRemainder + n Mod (n * (1 - character.Speed))
+               character.Move
                
-        End If
+               tempMoveCount = tempMoveCount + 1
+                   
+            End If
+            
+            If Round(n / (n * (1 - character.Speed)), 0) = 1 Then
+               character.CycleRemainder = character.CycleRemainder + n Mod (n * (1 - character.Speed))
         
-        If Round(n / (n * (1 - pacman.Speed)), 0) = 1 Then
-           pacman.CycleRemainder = pacman.CycleRemainder + n Mod (n * (1 - pacman.Speed))
+            End If
+            'Debug.Print "Frame: " & cycleCounter & " PM pos: " & pacman.CurrentTile.y & ", " & pacman.CurrentTile.x & ": " & pacman.CurrentTile.Id
+    
     
         End If
-        'Debug.Print "Frame: " & cycleCounter & " PM pos: " & pacman.CurrentTile.y & ", " & pacman.CurrentTile.x & ": " & pacman.CurrentTile.Id
-
-
-    End If
+    Next
     
-                Debug.Print "Frame: " & this.CycleCounter
-                Debug.Print "Moves: " & tempMoveCount
-                Debug.Print "CycleRemainder: " & pacman.CycleRemainder
-                Debug.Print "-----------------------"
-                
-    If this.CycleCounter Mod Round(n / (n * (1 - blinky.Speed)), 0) <> 0 Then
-        blinky.Move
-    End If
+'                Debug.Print "Frame: " & this.CycleCounter
+'                Debug.Print "Moves: " & tempMoveCount
+'                Debug.Print "CycleRemainder: " & Pacman.CycleRemainder
+'                Debug.Print "-----------------------"
     
     'Debug.Assert Not cycleCounter = 100
     'If Pacman.IsDead Then IsGameOver = True
-    UI.DrawGhost blinky
-    UI.DrawPacman pacman
+    'UI.DrawGhost this.Ghosts
+    UIAdapter.AsCommandSender.UpdateComponent this.Moveables
+End Sub
+
+Private Sub Class_Initialize()
+    Set this.Moveables = New GamePieceCollection
 End Sub
 
 Private Sub Class_Terminate()
     Debug.Print TypeName(Me) & " terminating..."
+    Set this.Moveables = Nothing
+    
     UIAdapter.Deconstruct
+    
+    Erase this.Maze
+    Erase MapManager.Maze
+
     Set UIAdapter = Nothing
-    Set UI = Nothing
 End Sub
 
 Public Sub StartGame(userInput As ViewAdapter)
-    Set UI = userInput
     Set UIAdapter = userInput
     
     '// set up pacman
-    Set Me.pacman = New PacmanController
-    Set Me.pacman.CurrentTile = MapManager.GetMazeTile(46, 30)
+    Set Me.Pacman = New PacmanController
+    Set Me.Pacman.CurrentTile = MapManager.GetMazeTile(46, 30)
+    this.Moveables.Add Pacman
     
     '// set up ghosts
     Set Me.blinky = New Ghost
     Set Me.blinky.CurrentTile = MapManager.GetMazeTile(22, 30)
     'Set Me.blinky.ActiveBehavior = New ScatterBehavior
-    Set Me.blinky.ActiveBehavior = ChasePacmanBehavior.Create(Me.pacman)
+    Set Me.blinky.ActiveBehavior = ChasePacmanBehavior.Create(Me.Pacman)
+    this.Moveables.Add blinky
     
-    
-    UI.DrawMap this.Maze
+    UIAdapter.AsCommandSender.CreateMap this.Maze
     
     this.CycleCounter = 0
     
@@ -142,13 +152,13 @@ End Sub
 Private Sub UIAdapter_DirectionalKeyPressed(vbKeyCode As KeyCode)
     Select Case vbKeyCode
         Case KeyCode.UpArrow
-            pacman.Heading = dUp
+            Pacman.Heading = dUp
         Case KeyCode.DownArrow
-            pacman.Heading = dDown
+            Pacman.Heading = dDown
         Case KeyCode.LeftArrow
-            pacman.Heading = dLeft
+            Pacman.Heading = dLeft
         Case KeyCode.RightArrow
-            pacman.Heading = dRight
+            Pacman.Heading = dRight
     End Select
     
 End Sub

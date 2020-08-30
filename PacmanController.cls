@@ -11,6 +11,8 @@ Attribute VB_Exposed = False
 Option Explicit
 Implements IGamePiece
 
+Private Const CHARACTER_ID As String = "pacman"
+
 Private Type TPacmanController
     NextTile As Tile '// the next tile in pacman's current path
     CurrentTile As Tile '// the tile pacman is current in
@@ -23,11 +25,9 @@ Private Type TPacmanController
 End Type
 
 Private this As TPacmanController
-Public Property Get CycleRemainder() As Integer
-    CycleRemainder = this.CycleRemainder
-End Property
-Public Property Let CycleRemainder(value As Integer)
-    this.CycleRemainder = value
+
+Public Property Get Name() As String
+    Name = CHARACTER_ID
 End Property
 
 Public Property Get NextTile() As Tile
@@ -68,14 +68,6 @@ Public Property Let Heading(ByVal RHS As Direction)
     End If
 End Property
 
-Public Property Get Speed() As Double
-    Speed = this.Speed
-End Property
-
-Public Property Let Speed(ByVal RHS As Double)
-    this.Speed = RHS
-End Property
-
 Public Property Get IsDead() As Boolean
     IsDead = this.IsDead
 End Property
@@ -90,9 +82,27 @@ Private Sub Class_Initialize()
     this.CommandedHeading = dLeft
 End Sub
 
-Public Sub Move()
-    Call IGamePiece_Move
-End Sub
+
+'//Movebale Gamepeice Implementation
+Private Property Get IGamePiece_CurrentHeading() As Direction
+    IGamePiece_CurrentHeading = Me.Heading
+End Property
+
+Private Property Get IGamePiece_CurrentTile() As Tile
+    Set IGamePiece_CurrentTile = Me.CurrentTile
+End Property
+
+Private Property Let IGamePiece_CycleRemainder(RHS As Integer)
+    this.CycleRemainder = RHS
+End Property
+
+Private Property Get IGamePiece_CycleRemainder() As Integer
+    IGamePiece_CycleRemainder = this.CycleRemainder
+End Property
+
+Private Property Get IGamePiece_Id() As String
+    IGamePiece_Id = CHARACTER_ID
+End Property
 
 Private Sub IGamePiece_Move()
     
@@ -112,3 +122,7 @@ Private Sub IGamePiece_Move()
     Set Me.TargetTile = MapManager.GetNextTile(this.CurrentTile, this.CommandedHeading)
     Set Me.NextTile = MapManager.GetNextTile(this.CurrentTile, this.Heading)
 End Sub
+
+Private Property Get IGamePiece_Speed() As Double
+    IGamePiece_Speed = this.Speed
+End Property

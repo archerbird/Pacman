@@ -16,18 +16,23 @@ End Type
 
 Public IsTraversable As Boolean
 Public Id As String
+
+Private mIsDecisionNode As Boolean
 Private mAddress As Coord
 
 Public Event DispatchEncounter()
 
 Public Property Get IsDecisionNode() As Boolean
     '// true if there are 3 or more path options
-    
+    If mIsDecisionNode = False Then Exit Function
     IsDecisionNode = -1 * (MapManager.GetNextTile(Me, dDown).IsTraversable + _
                             MapManager.GetNextTile(Me, dUp).IsTraversable + _
                             MapManager.GetNextTile(Me, dRight).IsTraversable + _
                             MapManager.GetNextTile(Me, dLeft).IsTraversable) _
                         >= 3
+End Property
+Public Property Let IsDecisionNode(value As Boolean)
+    mIsDecisionNode = value
 End Property
 
 Public Property Get x() As Integer

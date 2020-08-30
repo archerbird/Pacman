@@ -11,20 +11,27 @@ Attribute VB_Exposed = False
 '@Interface
 '// Commands that the Controller will need to be able to send to the UI
 Option Explicit
-Public Property Get Events() As ViewAdapter
+Private Const mModuleName As String = "IViewCommands"
+
+'@Description("Provides a way for the ViewAdapter to hook itself into an IViewCommands implementer")
+Public Property Get Events() As IViewEvents
+Attribute Events.VB_Description = "Provides a way for the ViewAdapter to hook itself into an IViewCommands implementer"
+End Property
+Public Property Set Events(ByVal value As IViewEvents)
 End Property
 
-Public Property Set Events(ByVal value As ViewAdapter)
-End Property
-Public Sub DrawMap(map() As Tile)
+Public Sub CreateMap(map() As Tile)
 End Sub
 
-Public Sub DrawPacman(character As PacmanController)
+Public Sub CreatePacman(character As PacmanController)
 End Sub
 
-Public Sub DrawGhost(character As Ghost)
+Public Sub CreateGhost(character As Ghost)
+End Sub
+
+Public Sub UpdateComponent(characters As GamePieceCollection)
 End Sub
 
 Private Sub Class_Initialize()
-    '//Err.Raise 5, mModuleName, AccessError(5) & "-Interface class must not be instantiated."
+    Err.Raise 5, mModuleName, "Interface class must not be instantiated."
 End Sub
