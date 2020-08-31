@@ -22,12 +22,8 @@ Public Sub TestWithHardCodedSheet()
     Set sheetWrapper = New WorksheetViewWrapper
     sheetWrapper.Init xlWs
 
-    '//hand it to an Excel Adapter
-''    Dim xlUIAdapter As ExcelViewAdapter
-''    Set xlUIAdapter = New ExcelViewAdapter
-''    xlUIAdapter.Init sheetWrapper
     
-    '//give the exce adapter to a game adapter
+    '//give it to a game adapter
     Dim viewUIAdapter As ViewAdapter
     Set viewUIAdapter = New ViewAdapter
     viewUIAdapter.Init sheetWrapper

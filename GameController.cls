@@ -16,12 +16,10 @@ Dim tempMoveCount As Long
 'Private CycleCounter As Double
 Private IsGameOver As Boolean
 Private Const n As Double = 10
+Private player As PacmanController
 
 Public WithEvents UIAdapter As ViewAdapter
 Attribute UIAdapter.VB_VarHelpID = -1
-
-Public Pacman As PacmanController
-Public blinky As Ghost
 
 Public Enum Direction
     dNone = 0
@@ -35,7 +33,7 @@ Private Type TGameController
     Maze() As Tile
     CycleCounter As Long
     Ghosts As Collection
-    Moveables As GamePieceCollection
+    Moveables As Collection
     Pacman As PacmanController
 End Type
 
@@ -61,6 +59,7 @@ Private Sub Progress()
     Sleep 0.05
     
     Dim character As IGamePiece
+    
     
     For Each character In this.Moveables
     
@@ -103,7 +102,7 @@ Private Sub Progress()
 End Sub
 
 Private Sub Class_Initialize()
-    Set this.Moveables = New GamePieceCollection
+    Set this.Moveables = New Collection
 End Sub
 
 Private Sub Class_Terminate()
@@ -119,19 +118,33 @@ Private Sub Class_Terminate()
 End Sub
 
 Public Sub StartGame(userInput As ViewAdapter)
+    Dim blinky As Ghost
+    Dim inky As Ghost
+
     Set UIAdapter = userInput
     
     '// set up pacman
-    Set Me.Pacman = New PacmanController
-    Set Me.Pacman.CurrentTile = MapManager.GetMazeTile(46, 30)
-    this.Moveables.Add Pacman
+    Set player = New PacmanController
+    Set player.CurrentTile = MapManager.GetMazeTile(46, 30)
+    this.Moveables.Add player
+    UIAdapter.AsCommandSender.CreatePacman player
     
     '// set up ghosts
-    Set Me.blinky = New Ghost
-    Set Me.blinky.CurrentTile = MapManager.GetMazeTile(22, 30)
-    'Set Me.blinky.ActiveBehavior = New ScatterBehavior
-    Set Me.blinky.ActiveBehavior = ChasePacmanBehavior.Create(Me.Pacman)
+    Set blinky = New Ghost
+    blinky.Color = vbRed
+    blinky.Name = "Blinky"
+    Set blinky.CurrentTile = MapManager.GetMazeTile(22, 30)
+    Set blinky.ActiveBehavior = ChasePacmanBehavior.Create(player)
     this.Moveables.Add blinky
+    UIAdapter.AsCommandSender.CreateGhost blinky
+    
+    Set inky = New Ghost
+    inky.Color = vbCyan
+    inky.Name = "Inky"
+    Set inky.CurrentTile = MapManager.GetMazeTile(22, 20)
+    Set inky.ActiveBehavior = BashfulBehavior.Create(player, blinky)
+    this.Moveables.Add inky
+    UIAdapter.AsCommandSender.CreateGhost inky
     
     UIAdapter.AsCommandSender.CreateMap this.Maze
     
@@ -152,13 +165,13 @@ End Sub
 Private Sub UIAdapter_DirectionalKeyPressed(vbKeyCode As KeyCode)
     Select Case vbKeyCode
         Case KeyCode.UpArrow
-            Pacman.Heading = dUp
+            player.Heading = dUp
         Case KeyCode.DownArrow
-            Pacman.Heading = dDown
+            player.Heading = dDown
         Case KeyCode.LeftArrow
-            Pacman.Heading = dLeft
+            player.Heading = dLeft
         Case KeyCode.RightArrow
-            Pacman.Heading = dRight
+            player.Heading = dRight
     End Select
     
 End Sub

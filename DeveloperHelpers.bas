@@ -60,16 +60,16 @@ Function TransformToMap(inputString As String) As Tile()
     Dim subElement As Variant
     Dim result() As Tile
     Dim subArr() As String
-    Dim rowCount As Integer
-    Dim colCount As Integer
+    Dim RowCount As Integer
+    Dim ColCount As Integer
     Dim j As Integer
     Dim i As Integer
     
     rowArr = Split(inputString, ";")
-    rowCount = UBound(rowArr) - LBound(rowArr) + 1
-    colCount = UBound(Split(rowArr(LBound(rowArr)), ",")) - LBound(Split(rowArr(LBound(rowArr)), ",")) + 1
+    RowCount = UBound(rowArr) - LBound(rowArr) + 1
+    ColCount = UBound(Split(rowArr(LBound(rowArr)), ",")) - LBound(Split(rowArr(LBound(rowArr)), ",")) + 1
     
-    ReDim result(1 To rowCount, 1 To colCount)
+    ReDim result(1 To RowCount, 1 To ColCount)
     
     For Each element In rowArr
         j = j + 1

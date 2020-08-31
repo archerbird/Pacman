@@ -48,6 +48,10 @@ Public Sub Init(xlWs As Worksheet)
     Set dPad = xlWs.Range("AE65")
 End Sub
 
+Private Sub Class_Initialize()
+    Set ShapeWrappers = New Dictionary
+End Sub
+
 Private Sub Class_Terminate()
     Set mAdapter = Nothing
     Set innerWs = Nothing
@@ -93,9 +97,10 @@ Private Sub IViewCommands_CreateMap(map() As Tile)
     Set MapRange = innerWs.Range(MAP_START_ADDRESS).Resize(UBound(map, 1) + YIndexOffset, UBound(map, 2) + XIndexOffset)
 End Sub
 
-Private Sub IViewCommands_UpdateComponent(characters As GamePieceCollection)
+Private Sub IViewCommands_UpdateComponent(characters As Collection)
     Dim character As IGamePiece
     Dim characterShape As IDrawable
+    Dim i As Integer
     
     For Each character In characters
         '// use the id from each character to get the corresponding ShapeWrapper

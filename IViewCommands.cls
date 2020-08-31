@@ -29,7 +29,7 @@ End Sub
 Public Sub CreateGhost(character As Ghost)
 End Sub
 
-Public Sub UpdateComponent(characters As GamePieceCollection)
+Public Sub UpdateComponent(characters As Collection)
 End Sub
 
 Private Sub Class_Initialize()

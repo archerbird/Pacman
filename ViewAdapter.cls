@@ -54,7 +54,7 @@ Private Sub IViewCommands_CreateMap(map() As Tile)
     mCommandsUI.CreateMap map
 End Sub
 
-Private Sub IViewCommands_UpdateComponent(characters As GamePieceCollection)
+Private Sub IViewCommands_UpdateComponent(characters As Collection)
     mCommandsUI.UpdateComponent characters
 End Sub
 
