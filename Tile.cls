@@ -7,7 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder "PacManEngine.Model.Maps"
+'@Folder "PacmanGame.Model.Maps"
 Option Explicit
 Private Type Coord
     y As Integer
@@ -56,3 +56,4 @@ End Sub
 Private Sub Class_Terminate()
     'Debug.Print TypeName(Me) & " Id:" & Me.Id & " terminating..."
 End Sub
+

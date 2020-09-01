@@ -7,7 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder("PacManEngine.Model.Ghost.PathingAI")
+'@Folder "PacmanGame.Model.Ghost.PathingAI"
 Option Explicit
 Implements IGhostBehavior
 Public CornerTile As Tile

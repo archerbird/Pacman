@@ -7,7 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder "PacManEngine.Model"
+'@Folder "PacmanGame.Model"
 Option Explicit
 
 Public WithEvents HostCell As Tile

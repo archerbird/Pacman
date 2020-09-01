@@ -1,5 +1,5 @@
 Attribute VB_Name = "Program"
-'@Folder("PacManEngine")
+'@Folder "PacmanGame"
 Option Explicit
 Private mController As GameController
 
@@ -22,7 +22,6 @@ Public Sub TestWithHardCodedSheet()
     Set sheetWrapper = New WorksheetViewWrapper
     sheetWrapper.Init xlWs
 
-    
     '//give it to a game adapter
     Dim viewUIAdapter As ViewAdapter
     Set viewUIAdapter = New ViewAdapter
@@ -30,12 +29,10 @@ Public Sub TestWithHardCodedSheet()
     
     '//hand that to a new controller
     Set mController = New GameController
-    
-    '//load the map
-    mController.Maze = DeveloperHelpers.LoadMapFromFile
-    
+    Set mController.UIAdapter = viewUIAdapter
+
     '//start the game!
-    mController.StartGame viewUIAdapter
+    mController.StartGame
 End Sub
 
 Public Sub Quit()

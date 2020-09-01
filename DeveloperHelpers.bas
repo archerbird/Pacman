@@ -1,5 +1,5 @@
 Attribute VB_Name = "DeveloperHelpers"
-'@Folder("PacManEngine")
+'@Folder "PacmanGame"
 Option Explicit
 
 Sub ChangeWallTokens()
@@ -84,13 +84,7 @@ Function TransformToMap(inputString As String) As Tile()
     TransformToMap = result
 End Function
 
-Public Function LoadMapFromFile() As Tile()
-    Dim filePath As String
-    filePath = ThisWorkbook.Path & "\Maps\defaultMap.pmap"
-    
-    LoadMapFromFile = TransformToMap(ReadText(filePath))
-    
-End Function
+
 
 Public Function ReadText(fileName As String) As String
     Dim textLine As String

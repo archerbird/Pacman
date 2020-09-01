@@ -1,4 +1,4 @@
 Attribute VB_Name = "GhostFactory"
-'@Folder "PacManEngine.Model.Ghost"
+'@Folder "PacmanGame.Model.Ghost"
 Option Explicit
 
