@@ -24,15 +24,15 @@ Attribute AsShape.VB_UserMemId = 0
     Set AsShape = this.InternalShape
 End Property
 
-Public Function Create(hostSheet As Worksheet) As IDrawable
+Public Function Create(hostSheet As Worksheet, shapeName As String) As IDrawable
     Dim result As New PacmanStyler
     
-    result.Init hostSheet
+    result.Init hostSheet, shapeName
     
     Set Create = result
 End Function
 
-Public Sub Init(hostSheet As Worksheet)
+Public Sub Init(hostSheet As Worksheet, shapeName As String)
     Dim newShape As Shape
     
     
@@ -43,6 +43,7 @@ Public Sub Init(hostSheet As Worksheet)
         .Adjustments(2) = -35
         .Line.Visible = msoFalse
         .Fill.ForeColor.RGB = vbYellow
+        .Name = shapeName
     End With
     
     Set this.InternalShape = newShape

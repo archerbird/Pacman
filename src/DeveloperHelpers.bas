@@ -103,6 +103,6 @@ End Sub
 Sub test()
 Dim g As New GhostStyler
 
-g.Init ActiveSheet, vbCyan
+g.Init ActiveSheet, vbCyan, "test"
 
 End Sub

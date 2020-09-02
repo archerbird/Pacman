@@ -59,17 +59,22 @@ End Sub
 Private Sub IGameEventsHandler_CreateGhost(character As GhostModel)
     '// Create a corrosponding ViewModel Ghost
     Dim newGhostShape As New GhostStyler
-    newGhostShape.Init innerWs, character.Color
+    newGhostShape.Init innerWs, character.Color, character.Name
+    
+    Dim pointer As TargetPointer
+    Set pointer = New TargetPointer
+    pointer.Init newGhostShape
 
     '// Add him to the drawing collection
     this.ShapeWrappers.Add character.Name, newGhostShape
+    this.ShapeWrappers.Add character.Name & "Targeting", pointer
     
 End Sub
 
 Private Sub IGameEventsHandler_CreatePacman(character As PacmanModel)
     '// Create a corrosponding ViewModel Pacman
     Dim newPacmanShape As New PacmanStyler
-    newPacmanShape.Init innerWs
+    newPacmanShape.Init innerWs, character.Name
     
     '// Add him to the drawing collection
     this.ShapeWrappers.Add character.Name, newPacmanShape
@@ -91,8 +96,14 @@ Private Sub IGameEventsHandler_UpdateComponents(characters As Collection)
     
     For Each character In characters
         '// use the id from each character to get the corresponding ShapeWrapper
+        
         Set characterShape = this.ShapeWrappers.Item(character.Id)
         characterShape.Redraw character.CurrentHeading, TileToRange(character.CurrentTile)
+        
+        If this.ShapeWrappers.Exists(character.Id & "Targeting") Then
+            Set characterShape = this.ShapeWrappers.Item(character.Id & "Targeting")
+        characterShape.Redraw character.CurrentHeading, TileToRange(character.TargetTile)
+        End If
         
     Next
 End Sub

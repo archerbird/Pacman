@@ -213,3 +213,7 @@ End Function
 Private Property Get IGamePiece_Speed() As Double
     IGamePiece_Speed = this.Speed
 End Property
+
+Private Property Get IGamePiece_TargetTile() As Tile
+    Set IGamePiece_TargetTile = this.TargetTile
+End Property

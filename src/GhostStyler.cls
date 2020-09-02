@@ -13,19 +13,24 @@ Attribute VB_Exposed = False
 Option Explicit
 Implements IDrawable
 
-Private mSelf As Shape
+Private Type TGhostShape
+    InternalShape As Shape
+End Type
+
 Private Const clBLUE As Long = &HC47244
 Private Const clWHITE As Long = &HFFFFFF
 
-Public Property Get Self() As Shape
-    Set Self = mSelf
+Private this As TGhostShape
+
+Public Property Get AsShape() As Shape
+    Set AsShape = this.InternalShape
 End Property
 
 Public Sub Redraw(facing As Direction, location As Range)
 
-     Drawing.CenterShapeOnRange Me.Self, location
+     Drawing.CenterShapeOnRange Me.AsShape, location
 End Sub
-Public Sub Init(hostSheet As Worksheet, ghostColor As Long)
+Public Sub Init(hostSheet As Worksheet, ghostColor As Long, shapeName As String)
     Dim newShapesNames(0 To 7) As String
     Dim newShapeNamesEyes(0 To 4) As String
     Dim result As Shape
@@ -94,13 +99,14 @@ Public Sub Init(hostSheet As Worksheet, ghostColor As Long)
     Set result = hostSheet.Shapes.Range(newShapeNamesEyes).Group
     result.Height = 20.6
     result.Width = 20.6
+    result.Name = shapeName
     
     result.Line.Visible = msoFalse
-    Set mSelf = result
+    Set this.InternalShape = result
     
 End Sub
 
 Private Sub IDrawable_Redraw(facing As Direction, location As Range)
 
-    Drawing.CenterShapeOnRange mSelf, location
+    Drawing.CenterShapeOnRange this.InternalShape, location
 End Sub

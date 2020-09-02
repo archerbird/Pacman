@@ -28,5 +28,8 @@ End Property
 Public Property Get CurrentTile() As Tile
 End Property
 
+Public Property Get TargetTile() As Tile
+End Property
+
 Public Sub Move()
 End Sub
