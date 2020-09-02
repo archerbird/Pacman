@@ -1,7 +1,6 @@
 ###################
 ## Microsoft Office
 ###################
-*.xlsm
 *.xlam
 *.accdb
 *.accde
