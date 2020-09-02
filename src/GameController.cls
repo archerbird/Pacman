@@ -153,6 +153,11 @@ Private Sub UIAdapter_GameStarted()
     UIAdapter.AsCommandSender.CreateGhost inky
     
     Set clyde = BuildGhost("Clyde", rgbOrange, MapManager.GetMazeTile(22, 37), RandomBehavior.Create())
+    Set clyde.ActiveBehavior = PokeyBehavior.Create(this.Player, clyde, MapManager.GetMazeTile( _
+                                                                                                UBound(this.Maze, 1), _
+                                                                                                LBound(this.Maze, 2) _
+                                                                                                ) _
+                                                    )
     this.GamePieces.Add clyde
     UIAdapter.AsCommandSender.CreateGhost clyde
     

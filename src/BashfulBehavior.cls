@@ -39,7 +39,7 @@ End Property
 Private Function IGhostBehavior_AquireTargetTile() As Tile
     Dim offsetTile As Tile
     
-    Set offsetTile = MapManager.GetNextTile(this.Pacman.CurrentTile, this.Pacman.Heading, 4)
+    Set offsetTile = MapManager.GetNextTile(this.Pacman.CurrentTile, this.Pacman.Heading, 3)
     
     Set IGhostBehavior_AquireTargetTile = MapManager.GetMazeTile( _
                                                         this.blinky.CurrentTile.y + 2 * (offsetTile.y - this.blinky.CurrentTile.y), _

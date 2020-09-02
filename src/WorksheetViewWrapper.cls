@@ -21,6 +21,7 @@ Private Type TWorksheetViewWrapper
     ShapeWrappers As Dictionary
     YIndexOffset As Long
     XIndexOffset As Long
+    ShowGhostTargets As Boolean
 End Type
 
 '@MemberAttribute VB_VarHelpID, -1
@@ -42,6 +43,9 @@ Public Sub Init(xlWs As Worksheet)
     Set this.dPad = xlWs.Range("AE65")
 End Sub
 
+Public Property Let ShowGhostTargets(value As Boolean)
+    this.ShowGhostTargets = value
+End Property
 
 Private Sub Class_Initialize()
     Set this.ShapeWrappers = New Dictionary
@@ -61,13 +65,16 @@ Private Sub IGameEventsHandler_CreateGhost(character As GhostModel)
     Dim newGhostShape As New GhostStyler
     newGhostShape.Init innerWs, character.Color, character.Name
     
-    Dim pointer As TargetPointer
-    Set pointer = New TargetPointer
-    pointer.Init newGhostShape
+    If this.ShowGhostTargets Then
+        Dim pointer As TargetPointer
+        Set pointer = New TargetPointer
+        pointer.Init newGhostShape
+        this.ShapeWrappers.Add character.Name & "Targeting", pointer
+    End If
 
     '// Add him to the drawing collection
     this.ShapeWrappers.Add character.Name, newGhostShape
-    this.ShapeWrappers.Add character.Name & "Targeting", pointer
+    
     
 End Sub
 
