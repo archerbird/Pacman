@@ -7,7 +7,11 @@ Right now, until I've got a fully working game, the develop branch is default.
 
 ## Get Started
 You should be able to simply clone and launch the Pacman.xlsm. Sheet1 has a "hardcoded" maze. Eventually, I'd like to teach excel how to draw a maze from scratch. 
-You can start a game by running Client.Prototype()
+You can start a game by running Client.Prototype(). As of now, the only things that work are:
+1. You can move pacman by using the arrow keys
+1. Ghosts will navigate themselves around the maze
+
+For now, you can't die, but you also can't eat! 
 
 ## Rubberduck
 Its really helpful to have the Rubberduck VBE Add-in installed. You will be able to see a nicer folder structure for the project.
