@@ -23,13 +23,11 @@ Private Type TWorksheetViewWrapper
     XIndexOffset As Long
 End Type
 
+'@MemberAttribute VB_VarHelpID, -1
 Private WithEvents innerWs As Worksheet
 Attribute innerWs.VB_VarHelpID = -1
 Private this As TWorksheetViewWrapper
 
-Public Event Activated()
-Public Event Deactivated()
-Public Event DirectionalKeyPressed(vbKey As KeyCode)
 
 Public Sub Init(xlWs As Worksheet)
     Dim s As Shape

@@ -1,5 +1,5 @@
 Attribute VB_Name = "Drawing"
-'@Folder "PacmanGame"
+'@Folder "ViewImplementations.ExcelWorksheet.Common"
 Option Explicit
 
 Private Const TEXT_DOT_CHAR_CODE As Integer = 149

@@ -1,5 +1,5 @@
 Attribute VB_Name = "Math"
-'@Folder "PacmanGame"
+'@Folder "PacmanGame.Common"
 Option Explicit
 
 Public Function min(x As Long, y As Long) As Long

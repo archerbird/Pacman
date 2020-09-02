@@ -1,5 +1,5 @@
 Attribute VB_Name = "DeveloperHelpers"
-'@Folder "PacmanGame"
+'@Folder "PacmanGame.Common"
 Option Explicit
 
 Sub ChangeWallTokens()
@@ -54,50 +54,7 @@ Function RecordMapEncoding() As String
     RecordMapEncoding = Join(outerOutputArr, ";")
 End Function
 
-Function TransformToMap(inputString As String) As Tile()
-    Dim rowArr As Variant
-    Dim element As Variant
-    Dim subElement As Variant
-    Dim result() As Tile
-    Dim subArr() As String
-    Dim RowCount As Integer
-    Dim ColCount As Integer
-    Dim j As Integer
-    Dim i As Integer
-    
-    rowArr = Split(inputString, ";")
-    RowCount = UBound(rowArr) - LBound(rowArr) + 1
-    ColCount = UBound(Split(rowArr(LBound(rowArr)), ",")) - LBound(Split(rowArr(LBound(rowArr)), ",")) + 1
-    
-    ReDim result(1 To RowCount, 1 To ColCount)
-    
-    For Each element In rowArr
-        j = j + 1
-        i = 0
-        subArr = Split(element, ",")
-        For Each subElement In subArr
-            i = i + 1
-            Set result(j, i) = TileFactory.NewTile(CStr(subElement), i, j)
-        Next
-    Next
-    
-    TransformToMap = result
-End Function
 
-
-
-Public Function ReadText(fileName As String) As String
-    Dim textLine As String
-    
-    Open fileName For Input As #1
-    
-    Do Until EOF(1)
-        Line Input #1, textLine
-        ReadText = ReadText & textLine
-    Loop
-    
-    Close #1
-End Function
 
 'Sub ToTheClipboard(Text As String)
 'Dim MyDataObj As New DataObject
@@ -119,7 +76,7 @@ Sub RecordGhostShape()
     Dim s As Shape
     Dim ghostShape As Shape
     
-    Set ghostShape = Sheet1.Shapes("Pacman")
+    Set ghostShape = Sheet1.Shapes("Ghost")
     Set sg = ghostShape.GroupItems
     For Each s In sg
         s.Select

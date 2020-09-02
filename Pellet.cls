@@ -7,9 +7,10 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-'@Folder "PacmanGame.Model"
+'@Folder "PacmanGame.Model.Maps"
 Option Explicit
 
+'@MemberAttribute VB_VarHelpID, -1
 Public WithEvents HostCell As Tile
 Attribute HostCell.VB_VarHelpID = -1
 Public Parent As Collection

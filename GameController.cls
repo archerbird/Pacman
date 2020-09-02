@@ -8,13 +8,13 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 '@Folder "PacmanGame.Controller"
-'@Exposed
 Option Explicit
 Private Const mModuleName As String = "GameController"
 
 Private Const SECONDS_PER_TICK As Double = 0.06 '// sets a minimum amount of time (in seconds) that will pass between game ticks
 Private Const TICK_CYCLE_RESOLUTION As Double = 10 '// helps faciliate game pieces moving at different speeds
 
+'@MemberAttribute VB_VarHelpID, -1
 Public WithEvents UIAdapter As ViewAdapter
 Attribute UIAdapter.VB_VarHelpID = -1
 
@@ -194,4 +194,5 @@ End Function
 Private Sub BuildGameBoard()
     UIAdapter.AsCommandSender.CreateMap this.Maze
 End Sub
+
 

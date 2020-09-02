@@ -1,5 +1,5 @@
-Attribute VB_Name = "Program"
-'@Folder "PacmanGame"
+Attribute VB_Name = "Client"
+'@Folder "ViewImplementations.ExcelWorksheet"
 Option Explicit
 Private mController As GameController
 
@@ -12,7 +12,7 @@ Public Sub Main()
 
 End Sub
 
-Public Sub TestWithHardCodedSheet()
+Public Sub Prototype()
     '//get our concrete sheet
     Dim xlWs As Worksheet
     Set xlWs = Sheet1

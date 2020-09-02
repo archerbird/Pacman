@@ -8,7 +8,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 '@PredeclaredId
-'@Folder "ViewImplementations.ExcelWorksheet"
+'@Folder "ViewImplementations.ExcelWorksheet.ShapeWrapper"
 
 Option Explicit
 Implements IDrawable
